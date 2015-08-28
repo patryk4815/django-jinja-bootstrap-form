@@ -63,7 +63,7 @@ def render(element, markup_classes):
 
     if element_type == 'boundfield':
         add_input_classes(element)
-        template = get_template('bootstrapform/field.jinja', using=config.JINJA_FORM_ENGINE)
+        template = get_template('bootstrapform/field.html', using=config.JINJA_FORM_ENGINE)
         context = {'field': element, 'form': element.form, 'classes': markup_classes}
     else:
         has_management = getattr(element, 'management_form', None)
@@ -72,13 +72,13 @@ def render(element, markup_classes):
                 for field in form.visible_fields():
                     add_input_classes(field)
 
-            template = get_template('bootstrapform/formset.jinja', using=config.JINJA_FORM_ENGINE)
+            template = get_template('bootstrapform/formset.html', using=config.JINJA_FORM_ENGINE)
             context = {'formset': element, 'classes': markup_classes}
         else:
             for field in element.visible_fields():
                 add_input_classes(field)
 
-            template = get_template('bootstrapform/form.jinja', using=config.JINJA_FORM_ENGINE)
+            template = get_template('bootstrapform/form.html', using=config.JINJA_FORM_ENGINE)
             context = {'form': element, 'classes': markup_classes}
 
     return mark_safe(template.render(context))
