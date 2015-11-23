@@ -24,34 +24,34 @@
 {%- endmacro %}
 
 {% macro render_field_radio(form, field, classes) -%}
-  {% if field.auto_id %}
-    <label class="control-label {{ classes.label }} ">
-      {{ field.label }}
-      {% if field.field.required %}
-        <span class="required" aria-required="true">*</span>
-      {% endif %}
-    </label>
-  {% endif %}
-  <div class="{{ classes.value }}">
-    {% for choice in field %}
-      <div class="radio">
-        <label>
-          {{ choice.tag()|safe }}
-          {{ choice.choice_label }}
-        </label>
-      </div>
-    {% endfor %}
+    <div class="form-group">
+        {% if field.auto_id %}
+            <label class="{{ classes.label }} ">
+                {{ field.label }}
+                {% if field.field.required %}
+                    <span class="required" aria-required="true">*</span>
+                {% endif %}
+            </label>
+        {% endif %}
+        <div class="radio-list {{ classes.value }}">
+            {% for choice in field %}
+                <label>
+                    {{ choice.tag()|safe }}
+                    {{ choice.choice_label }}
+                </label>
+            {% endfor %}
+        </div>
 
-    {% for error in field.errors %}
-      <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
-    {% endfor %}
+        {% for error in field.errors %}
+            <span class="help-block {{ form.error_css_class }}">{{ error }}</span>
+        {% endfor %}
 
-    {% if field.help_text %}
-    <p class="help-block">
-      {{ field.help_text|safe }}
-    </p>
-    {% endif %}
-  </div>
+        {% if field.help_text %}
+            <p class="help-block">
+                {{ field.help_text|safe }}
+            </p>
+        {% endif %}
+    </div>
 {%- endmacro %}
 
 {% macro render_field_standard(form, field, classes) -%}
@@ -65,6 +65,7 @@
   {% endif %}
 
   <div class="{{ classes.value }} {% if field|is_multiple_checkbox %}multiple-checkbox{% endif %}">
+    {{ field|safe }}
     {{ field|safe }}
 
     {% for error in field.errors %}
